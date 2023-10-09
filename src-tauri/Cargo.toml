@@ -1,0 +1,42 @@
+[package]
+name = "gui-injector"
+version = "0.0.0"
+description = "A Tauri App"
+authors = ["you"]
+license = ""
+repository = ""
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.5", features = [ "dialog-open", "window-hide", "window-unminimize", "window-close", "window-unmaximize", "window-maximize", "window-start-dragging", "window-show", "window-minimize", "shell-open"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0.75"
+thiserror = "1.0.49"
+
+
+[dependencies.winapi]
+version = "0.3.9"
+features = [
+    "winuser",
+    "ntdef",
+    "processthreadsapi",
+    "errhandlingapi",
+    "synchapi",
+    "winbase",
+    "handleapi",
+    "tlhelp32",
+    "minwindef",
+    "memoryapi",
+    "winbase"
+] 
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]
