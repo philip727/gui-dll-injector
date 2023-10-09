@@ -43,6 +43,14 @@ const Main: Component = () => {
                     <h1 class="text-sm">select dll</h1>
                 </button>
             </div>
+            <div class="flex justify-center items-center">
+                <button
+                    onClick={() => invoke("inject_dll", { dll: dllStore.file, pid: processStore.process.pid })}
+                    class="bg-[var(--highlight)] w-[25rem] h-8 px-2 rounded-sm "
+                >
+                    <h1 class="text-sm">inject</h1>
+                </button>
+            </div>
         </div>
     )
 }

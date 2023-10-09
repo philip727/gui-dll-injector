@@ -1,3 +1,6 @@
+pub mod commands;
+pub mod errors;
+
 pub trait Injectable {
-    fn inject(&self, str: &str) -> anyhow::Result<()>;
+    unsafe fn inject(&self, dll: &str) -> anyhow::Result<()>;
 }

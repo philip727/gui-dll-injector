@@ -12,8 +12,6 @@ function App() {
                     <Route path="/proclist" component={Proclist} />
                 </Route>
             </Routes>
-
-
         </Router>
     );
 }

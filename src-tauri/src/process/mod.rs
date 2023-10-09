@@ -1,9 +1,11 @@
 pub mod commands;
 pub mod errors;
+pub mod events;
 pub mod helpers;
 pub mod states;
-pub mod events;
+pub mod inject;
 
+use anyhow::Ok;
 use serde::{Deserialize, Serialize};
 
 use crate::winapi::*;
@@ -24,6 +26,7 @@ pub struct Process {
 }
 
 impl Process {
+    // Finds all the processes
     pub unsafe fn find_all() -> anyhow::Result<Vec<TemporaryProcess>> {
         let mut entry: PROCESSENTRY32 = std::mem::zeroed();
         entry.dwSize = std::mem::size_of::<PROCESSENTRY32>() as u32;
@@ -46,5 +49,19 @@ impl Process {
         }
 
         Ok(processes)
+    }
+
+    // Attempts to open a handle to the process
+    pub unsafe fn new(pid: u32) -> anyhow::Result<Self> {
+        let handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
+        if handle.is_null() {
+            return Err(ProcessError::NoHandle {
+                pid,
+                error_code: GetLastError(),
+            }
+            .into());
+        }
+
+        Ok(Self { pid, handle })
     }
 }
